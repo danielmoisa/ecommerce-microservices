@@ -1,0 +1,1 @@
+# Frontend projects for ecommerce shop
