@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Microservices Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .architecture {
+            display: grid;
+            grid-template-rows: auto auto auto auto;
+            gap: 30px;
+            min-height: 800px;
+        }
+
+        .layer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .layer-title {
+            position: absolute;
+            left: 20px;
+            top: -15px;
+            background: #4a5568;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .component {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            min-width: 180px;
+        }
+
+        .component:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .component h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .component p {
+            color: #718096;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .features {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .features li {
+            color: #4a5568;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .features li:before {
+            content: "•";
+            color: #667eea;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Flow arrows */
+        .flow-arrow {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .arrow-vertical {
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            position: relative;
+        }
+
+        .arrow-vertical::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #764ba2;
+        }
+
+        .arrow-horizontal {
+            height: 3px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            position: relative;
+        }
+
+        .arrow-horizontal::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 12px solid #764ba2;
+        }
+
+        .flow-label {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            color: #4a5568;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 8px;
+        }
+
+        /* Specific flow arrows positioning */
+        .frontend-to-bff {
+            top: 23%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bff-to-services {
+            top: 41%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .services-to-infra {
+            top: 73%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .shipping-to-courier {
+            top: 52%;
+            left: 78%;
+            transform: translateX(-50%);
+        }
+
+        /* Color coding for different types */
+        .frontend {
+            border-left: 4px solid #48bb78;
+            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+        }
+
+        .bff {
+            border-left: 4px solid #ed8936;
+            background: linear-gradient(135deg, #fffaf0, #fbd38d);
+        }
+
+        .service {
+            border-left: 4px solid #4299e1;
+            background: linear-gradient(135deg, #ebf8ff, #bee3f8);
+        }
+
+        .job {
+            border-left: 4px solid #9f7aea;
+            background: linear-gradient(135deg, #faf5ff, #d6bcfa);
+        }
+
+        .infrastructure {
+            border-left: 4px solid #f56565;
+            background: linear-gradient(135deg, #fff5f5, #fed7d7);
+        }
+
+        .connection {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            opacity: 0.6;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        .legend-text {
+            font-size: 0.85rem;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .layer-title {
+                position: static;
+                transform: none;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            
+            .component {
+                min-width: 150px;
+            }
+        }
+
+        /* Animated background elements */
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .bg-circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bg-circle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .bg-circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <div class="container">
+        <h1>E-commerce Microservices Architecture</h1>
+        
+        <div class="architecture">
+            <!-- Flow arrows -->
+            <div class="flow-arrow frontend-to-bff">
+                <div class="arrow-vertical" style="height: 50px;"></div>
+                <div class="flow-label">HTTP Requests</div>
+            </div>
+            
+            <div class="flow-arrow bff-to-services">
+                <div class="arrow-vertical" style="height: 50px;"></div>
+                <div class="flow-label">gRPC Calls</div>
+            </div>
+            
+            <div class="flow-arrow services-to-infra">
+                <div class="arrow-vertical" style="height: 50px;"></div>
+                <div class="flow-label">Data Access</div>
+            </div>
+            
+            <div class="flow-arrow shipping-to-courier">
+                <div class="arrow-horizontal" style="width: 80px;"></div>
+                <div class="flow-label">MQ Events</div>
+            </div>
+            <!-- Frontend Layer -->
+            <div class="layer">
+                <div class="layer-title">Frontend</div>
+                <div class="component frontend">
+                    <h3>Web Frontend</h3>
+                    <p>User interface for customers and administrators</p>
+                    <ul class="features">
+                        <li>React/Vue.js Application</li>
+                        <li>Customer Portal</li>
+                        <li>Admin Dashboard</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BFF Layer -->
+            <div class="layer">
+                <div class="layer-title">BFF Layer</div>
+                <div class="component bff">
+                    <h3>Shop Interface</h3>
+                    <p>Backend for Frontend - Customer Portal</p>
+                    <ul class="features">
+                        <li>Service Discovery</li>
+                        <li>Service Communication</li>
+                        <li>Cache Integration</li>
+                    </ul>
+                </div>
+                <div class="component bff">
+                    <h3>Shop Admin</h3>
+                    <p>Backend for Frontend - Admin Portal</p>
+                    <ul class="features">
+                        <li>Service Discovery</li>
+                        <li>Service Communication</li>
+                        <li>Admin Management</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Microservices Layer -->
+            <div class="layer">
+                <div class="layer-title">Services</div>
+                <div class="component service">
+                    <h3>Catalog Service</h3>
+                    <p>Product inventory management</p>
+                    <ul class="features">
+                        <li>Ent Integration</li>
+                        <li>Service Registration</li>
+                        <li>Product Catalog</li>
+                    </ul>
+                </div>
+                <div class="component service">
+                    <h3>Cart Service</h3>
+                    <p>Shopping cart functionality</p>
+                    <ul class="features">
+                        <li>MongoDB Integration</li>
+                        <li>Service Registration</li>
+                        <li>Cart Management</li>
+                    </ul>
+                </div>
+                <div class="component service">
+                    <h3>User Service</h3>
+                    <p>User account management</p>
+                    <ul class="features">
+                        <li>Ent Integration</li>
+                        <li>Service Registration</li>
+                        <li>User Profiles</li>
+                    </ul>
+                </div>
+                <div class="component service">
+                    <h3>Order Service</h3>
+                    <p>Order processing and tracking</p>
+                    <ul class="features">
+                        <li>GORM Integration</li>
+                        <li>Service Registration</li>
+                        <li>Order Management</li>
+                    </ul>
+                </div>
+                <div class="component service">
+                    <h3>Payment Service</h3>
+                    <p>Payment processing simulation</p>
+                    <ul class="features">
+                        <li>Service Registration</li>
+                        <li>Payment Auth</li>
+                        <li>Transaction Handling</li>
+                    </ul>
+                </div>
+                <div class="component service">
+                    <h3>Shipping Service</h3>
+                    <p>Shipping management (MQ Producer)</p>
+                    <ul class="features">
+                        <li>Message Queue Integration</li>
+                        <li>Service Registration</li>
+                        <li>Shipping Events</li>
+                    </ul>
+                </div>
+                <div class="component job">
+                    <h3>Courier Job</h3>
+                    <p>Message consumer for shipping</p>
+                    <ul class="features">
+                        <li>Message Queue Consumer</li>
+                        <li>Background Processing</li>
+                        <li>Delivery Tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Infrastructure Layer -->
+            <div class="layer">
+                <div class="layer-title">Infrastructure</div>
+                <div class="component infrastructure">
+                    <h3>PostgreSQL</h3>
+                    <p>Relational database</p>
+                    <ul class="features">
+                        <li>Catalog Data</li>
+                        <li>User Data</li>
+                        <li>Order Data</li>
+                    </ul>
+                </div>
+                <div class="component infrastructure">
+                    <h3>MongoDB</h3>
+                    <p>Document database</p>
+                    <ul class="features">
+                        <li>Cart Data</li>
+                        <li>Session Storage</li>
+                    </ul>
+                </div>
+                <div class="component infrastructure">
+                    <h3>Redis Cache</h3>
+                    <p>Caching layer</p>
+                    <ul class="features">
+                        <li>Session Cache</li>
+                        <li>Query Cache</li>
+                        <li>Performance Boost</li>
+                    </ul>
+                </div>
+                <div class="component infrastructure">
+                    <h3>Message Queue</h3>
+                    <p>Async communication</p>
+                    <ul class="features">
+                        <li>Event Streaming</li>
+                        <li>Shipping Events</li>
+                        <li>Decoupled Services</li>
+                    </ul>
+                </div>
+                <div class="component infrastructure">
+                    <h3>Service Registry</h3>
+                    <p>Service discovery</p>
+                    <ul class="features">
+                        <li>Service Discovery</li>
+                        <li>Health Checks</li>
+                        <li>Load Balancing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #48bb78;"></div>
+                <span class="legend-text">Frontend</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ed8936;"></div>
+                <span class="legend-text">BFF Layer</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4299e1;"></div>
+                <span class="legend-text">Microservices</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #9f7aea;"></div>
+                <span class="legend-text">Background Jobs</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f56565;"></div>
+                <span class="legend-text">Infrastructure</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -25,31 +25,11 @@ services:
     hostname: order-db
     environment:
       MYSQL_ROOT_PASSWORD: dangerous
-  user-redis:
+  redis:
     image: redis:7
-    hostname: user-redis
+    hostname: redis
     ports:
       - "6379:6379"
-  catalog-redis:
-    image: redis:7
-    hostname: catalog-redis
-    ports:
-      - "6380:6379"
-  cart-redis:
-    image: redis:7
-    hostname: cart-redis
-    ports:
-      - "6381:6379"
-  order-redis:
-    image: redis:7
-    hostname: order-redis
-    ports:
-      - "6382:6379"
-  payment-redis:
-    image: redis:7
-    hostname: payment-redis
-    ports:
-      - "6383:6379"
   jaeger:
     image: jaegertracing/all-in-one:latest
     hostname: jaeger
