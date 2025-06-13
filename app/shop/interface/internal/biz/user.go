@@ -3,8 +3,9 @@ package biz
 import (
 	"context"
 	"errors"
-	"github.com/go-kratos/kratos/v2/log"
 	"math/rand"
+
+	"github.com/go-kratos/kratos/v2/log"
 )
 
 var (

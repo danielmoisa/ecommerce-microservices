@@ -29,10 +29,15 @@ func NewUserRepo(data *Data, logger log.Logger) biz.UserRepo {
 }
 
 func (rp *userRepo) VerifyPassword(ctx context.Context, u *biz.User, password string) error {
-	_, err := rp.data.uc.VerifyPassword(ctx, &usV1.VerifyPasswordReq{
+	resp, err := rp.data.uc.VerifyPassword(ctx, &usV1.VerifyPasswordReq{
 		Username: u.Username,
 		Password: password,
 	})
+
+	if !resp.Ok {
+		return fmt.Errorf("invalid password")
+	}
+
 	if err != nil {
 		return err
 	}
