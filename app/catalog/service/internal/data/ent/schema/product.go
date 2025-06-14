@@ -9,13 +9,13 @@ import (
 	"github.com/danielmoisa/ecommerce-microservices/app/catalog/service/internal/biz"
 )
 
-// Beer holds the schema definition for the Beer entity.
-type Beer struct {
+// Product holds the schema definition for the Product entity.
+type Product struct {
 	ent.Schema
 }
 
-// Fields of the Beer.
-func (Beer) Fields() []ent.Field {
+// Fields of the Product.
+func (Product) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("id"),
 		field.String("name"),
@@ -34,7 +34,7 @@ func (Beer) Fields() []ent.Field {
 	}
 }
 
-// Edges of the Beer.
-func (Beer) Edges() []ent.Edge {
+// Edges of the Product.
+func (Product) Edges() []ent.Edge {
 	return []ent.Edge{}
 }

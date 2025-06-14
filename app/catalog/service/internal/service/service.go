@@ -13,11 +13,11 @@ var ProviderSet = wire.NewSet(NewCatalogService)
 type CatalogService struct {
 	v1.UnimplementedCatalogServer
 
-	bc  *biz.BeerUseCase
+	bc  *biz.ProductUseCase
 	log *log.Helper
 }
 
-func NewCatalogService(bc *biz.BeerUseCase, logger log.Logger) *CatalogService {
+func NewCatalogService(bc *biz.ProductUseCase, logger log.Logger) *CatalogService {
 	return &CatalogService{
 
 		bc:  bc,

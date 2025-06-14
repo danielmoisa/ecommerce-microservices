@@ -25,9 +25,9 @@ func initApp(confServer *conf.Server, registry *conf.Registry, confData *conf.Da
 	if err != nil {
 		return nil, nil, err
 	}
-	beerRepo := data.NewBeerRepo(dataData, logger)
-	beerUseCase := biz.NewBeerUseCase(beerRepo, logger)
-	catalogService := service.NewCatalogService(beerUseCase, logger)
+	productRepo := data.NewProductRepo(dataData, logger)
+	productUseCase := biz.NewProductUseCase(productRepo, logger)
+	catalogService := service.NewCatalogService(productUseCase, logger)
 	grpcServer := server.NewGRPCServer(confServer, logger, tracerProvider, catalogService)
 	registrar := server.NewRegistrar(registry)
 	app := newApp(logger, grpcServer, registrar)
