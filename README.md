@@ -1,6 +1,6 @@
-# E-commerce Microservices Platform
+# E-commerce Microservices
 
-A modern, scalable e-commerce platform built with microservices architecture using Go and Kratos framework.
+A scalable e-commerce platform, and mono-repo microservices example, build using Go and Kratos framework.
 
 ## 🏗️ Architecture Overview
 
