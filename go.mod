@@ -29,6 +29,7 @@ require (
 	google.golang.org/protobuf v1.36.6
 	gorm.io/driver/mysql v1.0.6
 	gorm.io/gorm v1.21.9
+	github.com/golang-jwt/jwt/v5 v5.1.0
 )
 
 require (
@@ -56,7 +57,6 @@ require (
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/go-playground/form/v4 v4.2.1 // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
-	github.com/golang-jwt/jwt/v5 v5.1.0 // indirect
 	github.com/golang/glog v1.2.4 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
