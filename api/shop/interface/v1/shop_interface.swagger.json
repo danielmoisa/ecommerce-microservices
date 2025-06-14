@@ -84,14 +84,14 @@
         ]
       }
     },
-    "/v1/catalog/beers": {
+    "/v1/catalog/products": {
       "get": {
-        "operationId": "ShopInterface_ListBeer",
+        "operationId": "ShopInterface_ListProduct",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListBeerReply"
+              "$ref": "#/definitions/v1ListProductReply"
             }
           },
           "default": {
@@ -122,14 +122,14 @@
         ]
       }
     },
-    "/v1/catalog/beers/{id}": {
+    "/v1/catalog/products/{id}": {
       "get": {
-        "operationId": "ShopInterface_GetBeer",
+        "operationId": "ShopInterface_GetProduct",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetBeerReply"
+              "$ref": "#/definitions/v1GetProductReply"
             }
           },
           "default": {
@@ -559,7 +559,25 @@
         }
       }
     },
-    "ListBeerReplyBeer": {
+    "ListCardReplyCard": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cardNo": {
+          "type": "string"
+        },
+        "ccv": {
+          "type": "string"
+        },
+        "expires": {
+          "type": "string"
+        }
+      }
+    },
+    "ListProductReplyProduct": {
       "type": "object",
       "properties": {
         "id": {
@@ -579,33 +597,16 @@
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ListBeerReplyBeerImage"
+            "type": "object",
+            "$ref": "#/definitions/ListProductReplyProductImage"
           }
         }
       }
     },
-    "ListBeerReplyBeerImage": {
+    "ListProductReplyProductImage": {
       "type": "object",
       "properties": {
         "url": {
-          "type": "string"
-        }
-      }
-    },
-    "ListCardReplyCard": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "cardNo": {
-          "type": "string"
-        },
-        "ccv": {
-          "type": "string"
-        },
-        "expires": {
           "type": "string"
         }
       }
@@ -632,6 +633,7 @@
         "details": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
         }
@@ -765,7 +767,25 @@
         }
       }
     },
-    "v1GetBeerReply": {
+    "v1GetCardReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cardNo": {
+          "type": "string"
+        },
+        "ccv": {
+          "type": "string"
+        },
+        "expires": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetProductReply": {
       "type": "object",
       "properties": {
         "id": {
@@ -785,33 +805,16 @@
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1GetBeerReplyImage"
+            "type": "object",
+            "$ref": "#/definitions/v1GetProductReplyImage"
           }
         }
       }
     },
-    "v1GetBeerReplyImage": {
+    "v1GetProductReplyImage": {
       "type": "object",
       "properties": {
         "url": {
-          "type": "string"
-        }
-      }
-    },
-    "v1GetCardReply": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "cardNo": {
-          "type": "string"
-        },
-        "ccv": {
-          "type": "string"
-        },
-        "expires": {
           "type": "string"
         }
       }
@@ -822,18 +825,8 @@
         "results": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/ListAddressReplyAddress"
-          }
-        }
-      }
-    },
-    "v1ListBeerReply": {
-      "type": "object",
-      "properties": {
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ListBeerReplyBeer"
           }
         }
       }
@@ -844,6 +837,7 @@
         "results": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/ListCardReplyCard"
           }
         }
@@ -854,6 +848,18 @@
     },
     "v1ListOrderReply": {
       "type": "object"
+    },
+    "v1ListProductReply": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ListProductReplyProduct"
+          }
+        }
+      }
     },
     "v1LoginReply": {
       "type": "object",

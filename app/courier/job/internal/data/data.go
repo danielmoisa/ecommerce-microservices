@@ -75,7 +75,7 @@ func NewDiscovery(conf *conf.Registry) registry.Discovery {
 func NewOrderServiceClient(r registry.Discovery, tp *tracesdk.TracerProvider) orderv1.OrderClient {
 	conn, err := grpc.DialInsecure(
 		context.Background(),
-		grpc.WithEndpoint("discovery:///beer.order.service"),
+		grpc.WithEndpoint("discovery:///ecommerce.order.service"),
 		grpc.WithDiscovery(r),
 		grpc.WithMiddleware(
 			tracing.Client(tracing.WithTracerProvider(tp)),

@@ -22,29 +22,29 @@ service ShopAdmin {
         };
     }
 
-    rpc ListBeer (ListBeerReq) returns (ListBeerReply) {
+    rpc ListProduct (ListProductReq) returns (ListProductReply) {
         option (google.api.http) = {
-            get: "/admin/v1/catalog/beers"
+            get: "/admin/v1/catalog/products"
         };
     }
 
-    rpc CreateBeer (CreateBeerReq) returns (CreateBeerReply) {
+    rpc CreateProduct (CreateProductReq) returns (CreateProductReply) {
         option (google.api.http) = {
-            post: "/admin/v1/catalog/beers"
+            post: "/admin/v1/catalog/products"
             body: "*"
         };
     }
 
-    rpc UpdateBeer (UpdateBeerReq) returns (UpdateBeerReply) {
+    rpc UpdateProduct (UpdateProductReq) returns (UpdateProductReply) {
         option (google.api.http) = {
-            put: "/admin/v1/catalog/beers/{id}"
+            put: "/admin/v1/catalog/products/{id}"
             body: "*"
         };
     }
 
-    rpc DeleteBeer (DeleteBeerReq) returns (DeleteBeerReply) {
+    rpc DeleteProduct (DeleteProductReq) returns (DeleteProductReply) {
         option (google.api.http) = {
-            delete: "/admin/v1/catalog/beers/{id}"
+            delete: "/admin/v1/catalog/products/{id}"
         };
     }
 
@@ -234,13 +234,13 @@ message DeleteCardReply {
     bool ok = 1;
 }
 
-message ListBeerReq {
+message ListProductReq {
     int64 page_num = 1;
     int64 page_size = 2;
 }
 
-message ListBeerReply {
-    message Beer {
+message ListProductReply {
+    message Product {
         message Image {
             string url = 1;
         }
@@ -250,14 +250,14 @@ message ListBeerReply {
         int64 count = 4;
         repeated Image image = 5;
     }
-    repeated Beer results = 1;
+    repeated Product results = 1;
 }
 
-message GetBeerReq {
+message GetProductReq {
     int64 id = 1;
 }
 
-message GetBeerReply {
+message GetProductReply {
     message Image {
         string url = 1;
     }
@@ -310,7 +310,7 @@ message GetOrderReply {
 
 }
 
-message CreateBeerReq {
+message CreateProductReq {
     message Image {
         string url = 1;
     }
@@ -320,11 +320,11 @@ message CreateBeerReq {
     repeated Image image = 4;
 }
 
-message CreateBeerReply {
+message CreateProductReply {
 
 }
 
-message UpdateBeerReq {
+message UpdateProductReq {
     message Image {
         string url = 1;
     }
@@ -335,15 +335,15 @@ message UpdateBeerReq {
     repeated Image image = 5;
 }
 
-message UpdateBeerReply {
+message UpdateProductReply {
 
 }
 
-message DeleteBeerReq {
+message DeleteProductReq {
     int64 id = 1;
 }
 
-message DeleteBeerReply {
+message DeleteProductReply {
 
 }
 

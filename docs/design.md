@@ -1,6 +1,6 @@
 # Design
 This project is a demonstration for building microservices system with golang and Kratos framework. 
-It simulates an e-commerce website that sells beers.
+It simulates an e-commerce website that sells products.
 
 ## Features
 * Shows the project layout in mono-repo. (Which is different from the structures created with kratos-layout) 
@@ -20,14 +20,14 @@ All the actual services source codes are located in there.
 
 #### Service: `/app/catalog/service`
 ##### Functions
-This service maintained all the beers which are selling in this shop.
+This service maintained all the products which are selling in this shop.
 ##### Features
 * Integration for Ent
 * Service Registration
 
 #### Service: `/app/cart/service`
 ##### Functions
-The cart service, which can store the beers that users want to buy.
+The cart service, which can store the products that users want to buy.
 ##### Features
 * Integration for MongoDB
 * Service Registration

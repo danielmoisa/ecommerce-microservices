@@ -20,17 +20,17 @@ type catalogRepo struct {
 	sg   *singleflight.Group
 }
 
-func NewBeerRepo(data *Data, logger log.Logger) biz.CatalogRepo {
+func NewProductRepo(data *Data, logger log.Logger) biz.CatalogRepo {
 	return &catalogRepo{
 		data: data,
-		log:  log.NewHelper(log.With(logger, "module", "data/beer")),
+		log:  log.NewHelper(log.With(logger, "module", "data/product")),
 		sg:   &singleflight.Group{},
 	}
 }
 
-func (r *catalogRepo) GetBeer(ctx context.Context, id int64) (*biz.Beer, error) {
-	result, err, _ := r.sg.Do(fmt.Sprintf("get_beer_by_id_%d", id), func() (interface{}, error) {
-		reply, err := r.data.bc.GetBeer(ctx, &ctV1.GetBeerReq{
+func (r *catalogRepo) GetProduct(ctx context.Context, id int64) (*biz.Product, error) {
+	result, err, _ := r.sg.Do(fmt.Sprintf("get_product_by_id_%d", id), func() (interface{}, error) {
+		reply, err := r.data.bc.GetProduct(ctx, &ctV1.GetProductReq{
 			Id: id,
 		})
 		if err != nil {
@@ -40,7 +40,7 @@ func (r *catalogRepo) GetBeer(ctx context.Context, id int64) (*biz.Beer, error) 
 		for _, x := range reply.Image {
 			images = append(images, biz.Image{URL: x.Url})
 		}
-		return &biz.Beer{
+		return &biz.Product{
 			Id:          reply.Id,
 			Name:        reply.Name,
 			Description: reply.Description,
@@ -51,24 +51,24 @@ func (r *catalogRepo) GetBeer(ctx context.Context, id int64) (*biz.Beer, error) 
 	if err != nil {
 		return nil, err
 	}
-	return result.(*biz.Beer), nil
+	return result.(*biz.Product), nil
 }
 
-func (r *catalogRepo) ListBeer(ctx context.Context, pageNum, pageSize int64) ([]*biz.Beer, error) {
-	reply, err := r.data.bc.ListBeer(ctx, &ctV1.ListBeerReq{
+func (r *catalogRepo) ListProduct(ctx context.Context, pageNum, pageSize int64) ([]*biz.Product, error) {
+	reply, err := r.data.bc.ListProduct(ctx, &ctV1.ListProductReq{
 		PageNum:  pageNum,
 		PageSize: pageSize,
 	})
 	if err != nil {
 		return nil, err
 	}
-	rv := make([]*biz.Beer, 0)
+	rv := make([]*biz.Product, 0)
 	for _, x := range reply.Results {
 		images := make([]biz.Image, 0)
 		for _, img := range x.Image {
 			images = append(images, biz.Image{URL: img.Url})
 		}
-		rv = append(rv, &biz.Beer{
+		rv = append(rv, &biz.Product{
 			Id:          x.Id,
 			Description: x.Description,
 			Count:       x.Count,

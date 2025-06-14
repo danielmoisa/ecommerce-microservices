@@ -17,50 +17,14 @@
   ],
   "paths": {},
   "definitions": {
-    "ListBeerReplyBeer": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "count": {
-          "type": "string",
-          "format": "int64"
-        },
-        "image": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ListBeerReplyBeerImage"
-          }
-        }
-      }
-    },
-    "ListBeerReplyBeerImage": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string"
-        }
-      }
-    },
     "protobufAny": {
       "type": "object",
       "properties": {
-        "typeUrl": {
+        "@type": {
           "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "format": "byte"
         }
-      }
+      },
+      "additionalProperties": {}
     },
     "rpcStatus": {
       "type": "object",
@@ -75,12 +39,13 @@
         "details": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
         }
       }
     },
-    "v1CreateBeerReply": {
+    "v1CreateProductReply": {
       "type": "object",
       "properties": {
         "id": {
@@ -100,12 +65,13 @@
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1CreateBeerReplyImage"
+            "type": "object",
+            "$ref": "#/definitions/v1CreateProductReplyImage"
           }
         }
       }
     },
-    "v1CreateBeerReplyImage": {
+    "v1CreateProductReplyImage": {
       "type": "object",
       "properties": {
         "url": {
@@ -113,7 +79,7 @@
         }
       }
     },
-    "v1CreateBeerReqImage": {
+    "v1CreateProductReqImage": {
       "type": "object",
       "properties": {
         "url": {
@@ -121,10 +87,10 @@
         }
       }
     },
-    "v1DeleteBeerReply": {
+    "v1DeleteProductReply": {
       "type": "object"
     },
-    "v1GetBeerReply": {
+    "v1GetProductReply": {
       "type": "object",
       "properties": {
         "id": {
@@ -144,12 +110,13 @@
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1GetBeerReplyImage"
+            "type": "object",
+            "$ref": "#/definitions/v1GetProductReplyImage"
           }
         }
       }
     },
-    "v1GetBeerReplyImage": {
+    "v1GetProductReplyImage": {
       "type": "object",
       "properties": {
         "url": {
@@ -157,18 +124,34 @@
         }
       }
     },
-    "v1ListBeerReply": {
+    "v1ListProductReply": {
       "type": "object",
       "properties": {
         "results": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ListBeerReplyBeer"
+            "type": "object",
+            "$ref": "#/definitions/v1ListProductReplyProduct"
           }
         }
       }
     },
-    "v1UpdateBeerReply": {
+    "v1ListProductReplyNextToken": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ListProductReplyNextTokenProduct"
+          }
+        },
+        "nextPageToken": {
+          "type": "string"
+        }
+      }
+    },
+    "v1ListProductReplyNextTokenProduct": {
       "type": "object",
       "properties": {
         "id": {
@@ -188,12 +171,13 @@
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1UpdateBeerReplyImage"
+            "type": "object",
+            "$ref": "#/definitions/v1ListProductReplyNextTokenProductImage"
           }
         }
       }
     },
-    "v1UpdateBeerReplyImage": {
+    "v1ListProductReplyNextTokenProductImage": {
       "type": "object",
       "properties": {
         "url": {
@@ -201,7 +185,75 @@
         }
       }
     },
-    "v1UpdateBeerReqImage": {
+    "v1ListProductReplyProduct": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "count": {
+          "type": "string",
+          "format": "int64"
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ListProductReplyProductImage"
+          }
+        }
+      }
+    },
+    "v1ListProductReplyProductImage": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateProductReply": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "count": {
+          "type": "string",
+          "format": "int64"
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UpdateProductReplyImage"
+          }
+        }
+      }
+    },
+    "v1UpdateProductReplyImage": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateProductReqImage": {
       "type": "object",
       "properties": {
         "url": {

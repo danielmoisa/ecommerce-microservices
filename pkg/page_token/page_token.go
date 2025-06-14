@@ -20,7 +20,7 @@ var (
 const (
 	defaultMaxIndex    = 0
 	defaultMaxElements = 0
-	defaultSalt        = "beer-shop"
+	defaultSalt        = "ecommerce-shop"
 	layout             = "2006-01-02 15-04-05"
 )
 

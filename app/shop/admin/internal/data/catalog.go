@@ -19,12 +19,12 @@ type catalogRepo struct {
 func NewCatalogRepo(data *Data, logger log.Logger) biz.CatalogRepo {
 	return &catalogRepo{
 		data: data,
-		log:  log.NewHelper(log.With(logger, "module", "data/beer")),
+		log:  log.NewHelper(log.With(logger, "module", "data/product")),
 	}
 }
 
-func (r *catalogRepo) GetBeer(ctx context.Context, id int64) (*biz.Beer, error) {
-	reply, err := r.data.bc.GetBeer(ctx, &catalogv1.GetBeerReq{
+func (r *catalogRepo) GetProduct(ctx context.Context, id int64) (*biz.Product, error) {
+	reply, err := r.data.bc.GetProduct(ctx, &catalogv1.GetProductReq{
 		Id: id,
 	})
 	if err != nil {
@@ -34,7 +34,7 @@ func (r *catalogRepo) GetBeer(ctx context.Context, id int64) (*biz.Beer, error) 
 	for _, x := range reply.Image {
 		images = append(images, biz.Image{URL: x.Url})
 	}
-	return &biz.Beer{
+	return &biz.Product{
 		Id:          reply.Id,
 		Name:        reply.Name,
 		Description: reply.Description,
@@ -43,21 +43,21 @@ func (r *catalogRepo) GetBeer(ctx context.Context, id int64) (*biz.Beer, error) 
 	}, err
 }
 
-func (r *catalogRepo) ListBeer(ctx context.Context, pageNum, pageSize int64) ([]*biz.Beer, error) {
-	reply, err := r.data.bc.ListBeer(ctx, &catalogv1.ListBeerReq{
+func (r *catalogRepo) ListProduct(ctx context.Context, pageNum, pageSize int64) ([]*biz.Product, error) {
+	reply, err := r.data.bc.ListProduct(ctx, &catalogv1.ListProductReq{
 		PageNum:  pageNum,
 		PageSize: pageSize,
 	})
 	if err != nil {
 		return nil, err
 	}
-	rv := make([]*biz.Beer, 0)
+	rv := make([]*biz.Product, 0)
 	for _, x := range reply.Results {
 		images := make([]biz.Image, 0)
 		for _, img := range x.Image {
 			images = append(images, biz.Image{URL: img.Url})
 		}
-		rv = append(rv, &biz.Beer{
+		rv = append(rv, &biz.Product{
 			Id:          x.Id,
 			Description: x.Description,
 			Count:       x.Count,
@@ -67,12 +67,12 @@ func (r *catalogRepo) ListBeer(ctx context.Context, pageNum, pageSize int64) ([]
 	return rv, err
 }
 
-func (r *catalogRepo) CreateBeer(ctx context.Context, b *biz.Beer) (*biz.Beer, error) {
-	images := make([]*catalogv1.CreateBeerReq_Image, 0)
+func (r *catalogRepo) CreateProduct(ctx context.Context, b *biz.Product) (*biz.Product, error) {
+	images := make([]*catalogv1.CreateProductReq_Image, 0)
 	for _, x := range b.Images {
-		images = append(images, &catalogv1.CreateBeerReq_Image{Url: x.URL})
+		images = append(images, &catalogv1.CreateProductReq_Image{Url: x.URL})
 	}
-	reply, err := r.data.bc.CreateBeer(ctx, &catalogv1.CreateBeerReq{
+	reply, err := r.data.bc.CreateProduct(ctx, &catalogv1.CreateProductReq{
 		Name:        b.Name,
 		Description: b.Description,
 		Count:       b.Count,
@@ -82,17 +82,17 @@ func (r *catalogRepo) CreateBeer(ctx context.Context, b *biz.Beer) (*biz.Beer, e
 		return nil, err
 	}
 
-	return &biz.Beer{
+	return &biz.Product{
 		Id: reply.Id,
 	}, err
 }
 
-func (r *catalogRepo) UpdateBeer(ctx context.Context, b *biz.Beer) (*biz.Beer, error) {
-	images := make([]*catalogv1.UpdateBeerReq_Image, 0)
+func (r *catalogRepo) UpdateProduct(ctx context.Context, b *biz.Product) (*biz.Product, error) {
+	images := make([]*catalogv1.UpdateProductReq_Image, 0)
 	for _, x := range b.Images {
-		images = append(images, &catalogv1.UpdateBeerReq_Image{Url: x.URL})
+		images = append(images, &catalogv1.UpdateProductReq_Image{Url: x.URL})
 	}
-	reply, err := r.data.bc.UpdateBeer(ctx, &catalogv1.UpdateBeerReq{
+	reply, err := r.data.bc.UpdateProduct(ctx, &catalogv1.UpdateProductReq{
 		Name:        b.Name,
 		Description: b.Description,
 		Count:       b.Count,
@@ -102,7 +102,7 @@ func (r *catalogRepo) UpdateBeer(ctx context.Context, b *biz.Beer) (*biz.Beer, e
 		return nil, err
 	}
 
-	return &biz.Beer{
+	return &biz.Product{
 		Id: reply.Id,
 	}, err
 }

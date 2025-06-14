@@ -6,7 +6,7 @@ import (
 	"github.com/danielmoisa/ecommerce-microservices/app/shop/interface/internal/service"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
-	jwt2 "github.com/golang-jwt/jwt/v4"
+	jwt2 "github.com/golang-jwt/jwt/v5"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 
 	"github.com/go-kratos/kratos/v2/middleware/logging"

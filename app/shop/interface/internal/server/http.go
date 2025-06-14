@@ -14,7 +14,7 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
-	jwt2 "github.com/golang-jwt/jwt/v4"
+	jwt2 "github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/handlers"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 )

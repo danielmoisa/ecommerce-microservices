@@ -16,14 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/admin/v1/catalog/beers": {
+    "/admin/v1/catalog/products": {
       "get": {
-        "operationId": "ShopAdmin_ListBeer",
+        "operationId": "ShopAdmin_ListProduct",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListBeerReply"
+              "$ref": "#/definitions/v1ListProductReply"
             }
           },
           "default": {
@@ -54,12 +54,12 @@
         ]
       },
       "post": {
-        "operationId": "ShopAdmin_CreateBeer",
+        "operationId": "ShopAdmin_CreateProduct",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1CreateBeerReply"
+              "$ref": "#/definitions/v1CreateProductReply"
             }
           },
           "default": {
@@ -75,7 +75,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CreateBeerReq"
+              "$ref": "#/definitions/v1CreateProductReq"
             }
           }
         ],
@@ -84,14 +84,14 @@
         ]
       }
     },
-    "/admin/v1/catalog/beers/{id}": {
+    "/admin/v1/catalog/products/{id}": {
       "delete": {
-        "operationId": "ShopAdmin_DeleteBeer",
+        "operationId": "ShopAdmin_DeleteProduct",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1DeleteBeerReply"
+              "$ref": "#/definitions/v1DeleteProductReply"
             }
           },
           "default": {
@@ -115,12 +115,12 @@
         ]
       },
       "put": {
-        "operationId": "ShopAdmin_UpdateBeer",
+        "operationId": "ShopAdmin_UpdateProduct",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1UpdateBeerReply"
+              "$ref": "#/definitions/v1UpdateProductReply"
             }
           },
           "default": {
@@ -143,25 +143,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "count": {
-                  "type": "string",
-                  "format": "int64"
-                },
-                "image": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/v1UpdateBeerReqImage"
-                  }
-                }
-              }
+              "$ref": "#/definitions/ShopAdminUpdateProductBody"
             }
           }
         ],
@@ -311,7 +293,7 @@
     }
   },
   "definitions": {
-    "ListBeerReplyBeer": {
+    "ListProductReplyProduct": {
       "type": "object",
       "properties": {
         "id": {
@@ -331,12 +313,13 @@
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ListBeerReplyBeerImage"
+            "type": "object",
+            "$ref": "#/definitions/ListProductReplyProductImage"
           }
         }
       }
     },
-    "ListBeerReplyBeerImage": {
+    "ListProductReplyProductImage": {
       "type": "object",
       "properties": {
         "url": {
@@ -344,40 +327,7 @@
         }
       }
     },
-    "protobufAny": {
-      "type": "object",
-      "properties": {
-        "typeUrl": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "format": "byte"
-        }
-      }
-    },
-    "rpcStatus": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/protobufAny"
-          }
-        }
-      }
-    },
-    "v1CreateBeerReply": {
-      "type": "object"
-    },
-    "v1CreateBeerReq": {
+    "ShopAdminUpdateProductBody": {
       "type": "object",
       "properties": {
         "name": {
@@ -393,12 +343,66 @@
         "image": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1CreateBeerReqImage"
+            "type": "object",
+            "$ref": "#/definitions/v1UpdateProductReqImage"
           }
         }
       }
     },
-    "v1CreateBeerReqImage": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1CreateProductReply": {
+      "type": "object"
+    },
+    "v1CreateProductReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "count": {
+          "type": "string",
+          "format": "int64"
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CreateProductReqImage"
+          }
+        }
+      }
+    },
+    "v1CreateProductReqImage": {
       "type": "object",
       "properties": {
         "url": {
@@ -406,7 +410,7 @@
         }
       }
     },
-    "v1DeleteBeerReply": {
+    "v1DeleteProductReply": {
       "type": "object"
     },
     "v1GetOrderReply": {
@@ -424,19 +428,20 @@
         }
       }
     },
-    "v1ListBeerReply": {
+    "v1ListOrderReply": {
+      "type": "object"
+    },
+    "v1ListProductReply": {
       "type": "object",
       "properties": {
         "results": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ListBeerReplyBeer"
+            "type": "object",
+            "$ref": "#/definitions/ListProductReplyProduct"
           }
         }
       }
-    },
-    "v1ListOrderReply": {
-      "type": "object"
     },
     "v1ListUserReply": {
       "type": "object"
@@ -466,10 +471,10 @@
     "v1LogoutReq": {
       "type": "object"
     },
-    "v1UpdateBeerReply": {
+    "v1UpdateProductReply": {
       "type": "object"
     },
-    "v1UpdateBeerReqImage": {
+    "v1UpdateProductReqImage": {
       "type": "object",
       "properties": {
         "url": {
