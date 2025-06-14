@@ -3,6 +3,7 @@ import {
     NavLink, useHistory,
 } from "react-router-dom"
 import {login} from "../../api/user";
+import {setToken} from "../../auth";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -12,7 +13,8 @@ export default function Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
         login(username, password).then(
-            ()=>{
+            (res)=>{
+                setToken(res.data.token);
                 console.log("ok!");
                 history.push('/');
             }

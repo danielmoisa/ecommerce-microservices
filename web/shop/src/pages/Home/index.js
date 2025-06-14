@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
 import ProductCard from "../../components/ProductCard";
-import {listBeer} from "../../api/beer";
+import {listProduct} from "../../api/product";
 
 export default function Home(props) {
     const [beerList, setBeerList] = useState([]);
     useEffect(() => {
-        listBeer().then((res)=>{
+        listProduct().then((res)=>{
             setBeerList(res.data.results)
         });
 

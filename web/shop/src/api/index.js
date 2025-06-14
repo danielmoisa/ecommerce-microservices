@@ -2,7 +2,7 @@ import axios from 'axios';
 import {getToken} from "../auth";
 
 const service = axios.create({
-    baseURL: process.env.NODE_ENV=== "production" ? "//beer.go-kratos.dev" : "//localhost:8000",
+    baseURL: "//localhost:8000",
     timeout: 1000,
 });
 
