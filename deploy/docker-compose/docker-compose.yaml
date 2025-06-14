@@ -6,12 +6,15 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: dangerous
-      MYSQL_DATABASE: test
+      MYSQL_DATABASE: user-db
   catalog-db:
     image: mysql:8
     hostname: catalog-db
+    ports:
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: dangerous
+      MYSQL_DATABASE: catalog-db
   cart-db:
     image: mongo:4
     hostname: cart-db
@@ -23,8 +26,11 @@ services:
   order-db:
     image: mysql:8
     hostname: order-db
+    ports:
+      - "3308:3306"
     environment:
       MYSQL_ROOT_PASSWORD: dangerous
+      MYSQL_DATABASE: order-db
   redis:
     image: redis:7
     hostname: redis
