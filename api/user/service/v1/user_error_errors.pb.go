@@ -12,6 +12,9 @@ import (
 const _ = errors.SupportPackageIsVersion1
 
 func IsUnknownError(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == UserServiceErrorReason_UNKNOWN_ERROR.String() && e.Code == 500
 }
@@ -21,6 +24,9 @@ func ErrorUnknownError(format string, args ...interface{}) *errors.Error {
 }
 
 func IsLoginFailed(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == UserServiceErrorReason_LOGIN_FAILED.String() && e.Code == 500
 }
@@ -30,6 +36,9 @@ func ErrorLoginFailed(format string, args ...interface{}) *errors.Error {
 }
 
 func IsRegisterFailed(err error) bool {
+	if err == nil {
+		return false
+	}
 	e := errors.FromError(err)
 	return e.Reason == UserServiceErrorReason_REGISTER_FAILED.String() && e.Code == 500
 }
