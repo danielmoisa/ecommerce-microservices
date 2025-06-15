@@ -4,10 +4,11 @@ import { useHistory } from 'react-router-dom';
 export default function ProductCard(props) {
     let history = useHistory();
 
+
     return (
-        <div className="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col cursor-pointer" onClick={()=>{history.push('/beer/'+props.data.id)}}>
+        <div className="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col cursor-pointer " onClick={()=>{history.push('/product/'+props.data.id)}}>
                 <img className="hover:grow hover:shadow-lg object-cover h-full w-full"
-                     src={props.data.images[0]}/>
+                     src={props.data.image[0]?.url}/>
                     <div className="pt-3 flex items-center justify-between">
                         <p className="">{props.data.name}</p>
                         <svg className="h-6 w-6 fill-current text-gray-500 hover:text-black"

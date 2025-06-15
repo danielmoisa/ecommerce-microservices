@@ -28,7 +28,7 @@ export default function Nav(props) {
             <div className="order-1 md:order-2">
                 <a className="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
                    href="#">
-                    BeerShop
+                    Ecommerce Shop
                 </a>
             </div>
 

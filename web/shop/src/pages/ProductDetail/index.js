@@ -4,7 +4,7 @@ import {getProductDetail} from "../../api/product";
 import {addCartItem} from "../../api/order"
 import {login} from "../../api/user";
 
-export default function BeerDetail(props) {
+export default function ProductDetail(props) {
     const {id} = useParams();
     const [data, setData] = useState({});
     const [qty, setQty] = useState(1);

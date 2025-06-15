@@ -70,6 +70,7 @@ func (r *catalogRepo) ListProduct(ctx context.Context, pageNum, pageSize int64) 
 		}
 		rv = append(rv, &biz.Product{
 			Id:          x.Id,
+			Name:        x.Name,
 			Description: x.Description,
 			Count:       x.Count,
 			Images:      images,

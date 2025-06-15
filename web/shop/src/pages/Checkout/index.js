@@ -57,7 +57,7 @@ export default function Checkout(props) {
         setCartItemList([
             {
                 "id": 1,
-                "name": "A beer",
+                "name": "A product",
                 "image": "https://images.unsplash.com/photo-1613254025696-6f80f3172937?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                 "price": "5.99",
                 "quantity": 10,
@@ -65,7 +65,7 @@ export default function Checkout(props) {
             },
             {
                 "id": 2,
-                "name": "B beer",
+                "name": "B product",
                 "image": "https://images.unsplash.com/photo-1613254025696-6f80f3172937?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                 "price": "10.99",
                 "quantity": 5,

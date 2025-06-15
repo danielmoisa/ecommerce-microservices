@@ -88,6 +88,7 @@ func (r *productRepo) ListProduct(ctx context.Context, pageNum, pageSize int64) 
 	for _, po := range pos {
 		rv = append(rv, &biz.Product{
 			Id:          po.ID,
+			Name:        po.Name,
 			Description: po.Description,
 			Count:       po.Count,
 			Images:      po.Images,
