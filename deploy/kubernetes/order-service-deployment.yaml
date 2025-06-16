@@ -24,7 +24,7 @@ spec:
         io.kompose.service: order-service
     spec:
       containers:
-        - image: go-kratos/beer-cart-service:0.1.0
+        - image: danielmoisa/ecommerce-cart-service:0.1.0
           name: order-service
           resources: {}
       hostname: order-service

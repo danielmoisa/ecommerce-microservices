@@ -24,7 +24,7 @@ spec:
         io.kompose.service: user-service
     spec:
       containers:
-        - image: go-kratos/beer-user-service:0.1.0
+        - image: danielmoisa/ecommerce-user-service:0.1.0
           name: user-service
           resources: {}
       hostname: user-service

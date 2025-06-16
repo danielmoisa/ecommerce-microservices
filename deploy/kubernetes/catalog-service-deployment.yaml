@@ -24,7 +24,7 @@ spec:
         io.kompose.service: catalog-service
     spec:
       containers:
-        - image: go-kratos/beer-catalog-service:0.1.0
+        - image: danielmoisa/ecommerce-catalog-service:0.1.0
           name: catalog-service
           resources: {}
       hostname: catalog-service

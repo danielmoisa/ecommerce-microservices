@@ -24,7 +24,7 @@ spec:
         io.kompose.service: web-admin
     spec:
       containers:
-        - image: go-kratos/beer-web-admin:0.1.0
+        - image: danielmoisa/ecommerce-web-admin:0.1.0
           name: web-admin
           ports:
             - containerPort: 80

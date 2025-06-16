@@ -24,7 +24,7 @@ spec:
         io.kompose.service: payment-service
     spec:
       containers:
-        - image: go-kratos/beer-payment-service:0.1.0
+        - image: danielmoisa/ecommerce-payment-service:0.1.0
           name: payment-service
           resources: {}
       hostname: cart-service
